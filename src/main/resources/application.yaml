@@ -1,0 +1,14 @@
+# TODO: pass configuration by mounting to container
+spring:
+  application.name: api-example
+  r2dbc:
+    url: r2dbc:postgresql://postgres:5432/apidb
+    username: apiuser
+    password: apipassword
+  sql.init.mode: always
+server:
+  port: 8080
+logging:
+  level:
+    org.springframework: DEBUG
+    dev.nakamorichi: DEBUG

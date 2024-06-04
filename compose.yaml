@@ -1,0 +1,42 @@
+services:
+  api-example:
+    depends_on:
+      - postgres
+    build:
+      context: .
+    container_name: api-example
+    image: local/api-example:latest
+    ports:
+      - 10000:8080 # expose container port 8080 as host port 10000
+    environment:
+      TZ: Asia/Tokyo
+      # include some JVM optimizations for container environments,
+      # and make build info available to the app so that generated
+      # properties (version, Git revision, etc.) can be used during runtime for debug purposes
+      JAVA_TOOL_OPTIONS: >-
+        -XX:InitialRAMPercentage=70.0
+        -XX:MaxRAMPercentage=70.0
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+    network_mode: bridge
+
+  # use PostgreSQL DB for storage
+  postgres:
+    image: postgres:alpine3.20
+    container_name: api-example-db
+    ports:
+      - 11000:5432
+    environment:
+      TZ: Asia/Tokyo
+      POSTGRES_USER: apiuser
+      POSTGRES_PASSWORD: apipassword
+      POSTGRES_DB: apidb
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+    network_mode: bridge

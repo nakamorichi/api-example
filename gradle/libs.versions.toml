@@ -1,0 +1,54 @@
+[versions]
+# dependencies
+springCloud = "2023.0.2"
+r2dbcPostgresql = "1.0.5.RELEASE"
+lombok = "1.18.32"
+
+# plugins
+springBoot = "3.3.0"
+confResolution = "2.1.1"
+
+[plugins]
+springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
+confResolution = { id = "org.gradlex.jvm-dependency-conflict-resolution", version.ref = "confResolution" }
+
+[libraries]
+# Spring Boot
+springBootDependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "springBoot" }
+springBootStarterWebflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+springBootStarterValidation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+
+# Spring Cloud
+springCloudDependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "springCloud" }
+springCloudStarterKubernetesClientConfig = { module = "org.springframework.cloud:spring-cloud-starter-kubernetes-client-config" }
+
+# Spring Data
+springDataR2dbc = { module = "org.springframework.data:spring-data-r2dbc" }
+r2dbcPostgresql = { module = "org.postgresql:r2dbc-postgresql", version.ref = "r2dbcPostgresql" }
+
+# testing
+springBootStarterTest = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+# other
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+[bundles]
+implementation = [
+    "springBootStarterWebflux",
+    "springBootStarterValidation",
+    "springDataR2dbc",
+]
+
+compileOnly = [
+    "lombok"
+]
+
+runtimeOnly = [
+    "r2dbcPostgresql"
+]
+
+testImplementation = [
+    "springBootStarterTest",
+]
+
+testRuntimeOnly = []
